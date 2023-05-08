@@ -1,0 +1,29 @@
+<mat-card class="message">
+  <img src="https://s3.amazonaws.com/handshake.production/app/public/assets/institutions/293303/cover/hs-emp-branding-image-data.?1594135112" alt="University Housing Logo">
+  <mat-card-header>
+        <mat-card-title>
+            {{aboutData["title"]}}
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <span class="aboutText">{{aboutData["description"]["intro"]}}</span>
+        <ul id="purposeList">
+            <li *ngFor="let purpose of aboutData['description']['purposes']" class="purpose">
+                {{purpose}}
+            </li>
+        </ul>
+        <span class="aboutText">{{aboutData["description"]["outro"]}}</span>
+    </mat-card-content>
+    <mat-card-footer>
+        <mat-card-actions>
+            <a *ngFor="let link of aboutData.links"
+                class="aboutLink"
+                target="_blank"
+                mat-stroked-button
+                color="accent"
+                [href]="link.href">
+                {{link.name}}
+            </a>
+        </mat-card-actions>
+    </mat-card-footer>
+</mat-card>

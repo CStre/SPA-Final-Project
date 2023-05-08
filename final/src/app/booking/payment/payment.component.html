@@ -1,0 +1,104 @@
+<div class="container">
+  <mat-accordion multi="true" *ngIf="bookings.length > 0">
+    <h1>Welcome to your payments page!</h1>
+    <p>Here is where you can access and view all past and future bookings and see charges and the breakdowm of your
+      semesterly bookings:</p>
+
+    <h2>Charging Information</h2>
+    <p>Your semesterly rate will fluxuate for various different reasons and here you can see the breakdown as well as
+      the total you owe after each semester. Below are just some of the contibuting factors of higher or lower costs:
+    </p>
+    <ul>
+      <li>Administration charges and fluxuations</li>
+      <li>Residence hall style (suite, apartment, traditional)</li>
+      <li>Selected meal</li>
+      <li>Optional parking pass</li>
+    </ul>
+    <p>Based on these factors, your total cost will be different each semester and we recommend you to checkout links
+      provided on each of the semesters billings to learn more about how you are charged.</p>
+    <mat-expansion-panel *ngFor="let booking of bookings">
+      <mat-expansion-panel-header>
+        <p>{{ booking.semester }}</p>
+      </mat-expansion-panel-header>
+      <div class="booking-details" *matExpansionPanelContent>
+        <br>
+        <h2>General Information</h2>
+        <p>Student ID: <em>{{ booking.banner }}</em></p>
+        <p>Student Email: <em>{{ booking.email }}</em></p>
+        <p>Student Pronouns: <em>{{ booking.pronouns }}</em></p>
+        <p>Future Classification: <em>{{ booking.classification }}</em></p>
+
+        <h2>_________________________________________________________________________________________</h2>
+
+        <h2>Administration</h2>
+        <div class="pay-row">
+          <p>Tuition:</p>
+          <h6>$8,081.00</h6>
+        </div>
+        <div class="pay-row">
+          <p>Textbooks:</p>
+          <h6>$500.00</h6>
+        </div>
+        <div class="pay-row">
+          <p>Miscellaneous:</p>
+          <h6>$261.70</h6>
+        </div>
+
+        <h2>_________________________________________________________________________________________</h2>
+
+        <h2>On-Campus Residency</h2>
+        <p>Decision: <em>{{ booking.resident }}</em></p>
+        <p>Living Style: <em>{{ booking.style }}</em></p>
+        <div class="pay-row">
+          <p>Residence Hall Selection: <em>{{ booking.hall }}</em></p>
+          <h6 *ngIf="booking.style ==='Traditional'">$2,973.00</h6>
+          <h6 *ngIf="booking.style ==='Suite'">$3,514.00</h6>
+          <h6 *ngIf="booking.style ==='Hotel'">$3,315.00</h6>
+          <h6 *ngIf="booking.style ==='Apartment'">$3,723.00</h6>
+        </div>
+        <p>Room Number: <em>{{ booking.room }}</em></p>
+
+        <h2>_________________________________________________________________________________________</h2>
+
+        <h2>Campus Meal Plan</h2>
+        <div class="pay-row">
+          <p>Meal Plan Selection: <em>{{ booking.meals }}</em></p>
+          <h6 *ngIf="booking.meals ==='All Access 7'">$2,814.00</h6>
+          <h6 *ngIf="booking.meals ==='Weekly 14'">$2,430.00</h6>
+          <h6 *ngIf="booking.meals ==='All Access 5'">$2,437.00</h6>
+          <h6 *ngIf="booking.meals ==='Weekly 10'">$1,937.00</h6>
+          <h6 *ngIf="booking.meals ==='Weekly 7'">$1,451.00</h6>
+          <h6 *ngIf="booking.meals ==='Block 150'">$1,654.00</h6>
+          <h6 *ngIf="booking.meals ==='Block 100'">$1,161.00</h6>
+          <h6 *ngIf="booking.meals ==='Block 50'">$670.00</h6>
+        </div>
+
+        <h2>_________________________________________________________________________________________</h2>
+
+        <h2>Student Parking Permit</h2>
+        <p>Decision: <em>{{ booking.parking }}</em></p>
+        <div class="pay-row">
+        <p>Granted Parking Permit: <em>{{ booking.lot }}</em></p>
+          <h6 *ngIf="booking.lot ==='Appalachian 105'">$400.00</h6>
+          <h6 *ngIf="booking.lot ==='Greenwood Lot'">$400.00</h6>
+          <h6 *ngIf="booking.lot ==='South Lot'">$350.00</h6>
+          <h6 *ngIf="booking.lot ==='Hill Street'">$450.00</h6>
+          <h6 *ngIf="booking.lot ==='Blue Ridge Parking Deck'">$600.00</h6>
+          <h6 *ngIf="booking.lot ==='River Street Parking Deck'">$600.00</h6>
+          <h6 *ngIf="booking.lot ==='Appalachian Heights Lot'">$300.00</h6>
+          <h6 *ngIf="booking.lot ==='Mountaineer Lot'">$300.00</h6>
+          <h6 *ngIf="booking.lot ==='Mountain Laurel Lot'">$300.00</h6>
+        </div>
+
+        <mat-action-row>
+          <a mat-button href="https://financialaid.appstate.edu/undergraduate-2023-24-cost-attendance"
+            target="_blank">Learn More</a>
+        </mat-action-row>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card *ngIf="bookings.length == 0" class="message">
+    <mat-card-content>You have no past bookings</mat-card-content>
+  </mat-card>
+</div>

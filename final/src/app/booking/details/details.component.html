@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card" *ngIf="bookings">
+    <h1>{{ bookings.semester }}</h1>
+    <p>Student ID: <em>{{ bookings.banner }}</em></p>
+    <p>Student Email: <em>{{ bookings.email }}</em></p>
+    <p>Student Pronouns: <em>{{ bookings.pronouns }}</em></p>
+    <p>Future Classification: <em>{{ bookings.classification }}</em></p>
+
+    <div class="section">
+      <hr>
+      <h2>On-Campus Residency</h2>
+      <p>Decision: <em>{{ bookings.resident }}</em></p>
+      <p>Residence Hall Selection: <em>{{ bookings.hall }}</em></p>
+      <p>Living Style: <em>{{ bookings.style }}</em></p>
+      <p>Room Number: <em>{{ bookings.room }}</em></p>
+    </div>
+
+    <div class="section">
+      <hr>
+      <h2>Campus Meal Plan</h2>
+      <p><em>{{ bookings.meals }}</em></p>
+    </div>
+
+    <div class="section">
+      <hr>
+      <h2>Student Parking Permit</h2>
+      <p>Decision: <em>{{ bookings.parking }}</em></p>
+      <p>Granted Parking Permit: <em>{{ bookings.lot }}</em></p>
+    </div>
+  </div>
+</div>

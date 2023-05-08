@@ -1,0 +1,49 @@
+<div class="container">
+  <mat-accordion multi="true" *ngIf="bookings.length > 0">
+    <h1>Welcome to your bookings page!</h1>
+    <p>Here is a list of your past and future bookings including any meal plans and parking passes:</p>
+
+    <h2>Residence Hall Availability</h2>
+    <p>Your availability for different residence halls, meal plans, and parking passes is determined by several factors,
+      including:</p>
+    <ul>
+      <li>Number of credit hours completed</li>
+      <li>Residence hall style (suite, apartment, traditional)</li>
+      <li>Gender</li>
+      <li>Age</li>
+    </ul>
+    <p>Based on these factors, your availability for certain residence halls, meal plans, and parking passes may be
+      limited.</p>
+    <mat-expansion-panel *ngFor="let booking of bookings">
+      <mat-expansion-panel-header>
+        <p>{{ booking.semester }}</p>
+      </mat-expansion-panel-header>
+      <div class="booking-details" *matExpansionPanelContent>
+        <br>
+        <div class="booking-row">
+          <div class="booking-label">Classification:</div>
+          <div class="booking-value">{{ booking.classification }}</div>
+        </div>
+        <div class="booking-row">
+          <div class="booking-label">Housing Status:</div>
+          <div class="booking-value">{{ booking.resident }}</div>
+        </div>
+        <div class="booking-row">
+          <div class="booking-label">Meal Plan:</div>
+          <div class="booking-value">{{ booking.meals }}</div>
+        </div>
+        <div class="booking-row">
+          <div class="booking-label">Parking:</div>
+          <div class="booking-value">{{ booking.parking }}</div>
+        </div>
+        <mat-action-row>
+          <a mat-button [routerLink]="['/booking/details', booking.semester]">Go to details</a>
+        </mat-action-row>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card *ngIf="bookings.length == 0" class="message">
+    <mat-card-content>You have no past bookings</mat-card-content>
+  </mat-card>
+</div>

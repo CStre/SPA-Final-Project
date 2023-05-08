@@ -1,0 +1,16 @@
+<mat-toolbar id="appHeader">
+  <div class="headerRight">
+    <ul class="headerList">
+      <li *ngFor="let link of links" class="headerListItem">
+        <a  [routerLink]="link.path"
+            class="headerLink"
+            mat-button
+            color = "ffffff"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+          {{link.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

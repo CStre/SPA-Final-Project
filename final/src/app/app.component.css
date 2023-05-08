@@ -1,0 +1,72 @@
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+/* Header styles */
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.nameBadge {
+  margin-right: 20px;
+}
+
+/* Login form styles */
+.loginForm {
+  background-color: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0px;
+  height: calc(100vh - 60px); /* this sets the height of the form to the height of the viewport minus the height of the toolbar */
+}
+
+.loginBox {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginBox h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.loginForm mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loginForm button {
+  width: 100%;
+  margin-top: 0px;
+}
+
+/* Toolbar styles */
+
+mat-toolbar {
+  background-color: rgb(64, 64, 64);
+  color: rgba(255, 230, 0, 0.793);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+mat-toolbar span {
+  font-size: 25px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+

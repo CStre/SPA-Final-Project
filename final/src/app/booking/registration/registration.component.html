@@ -1,0 +1,374 @@
+<div class="regForm">
+  <div class="regFormBox">
+
+    <form (ngSubmit)="addBooking1(genForm)" #genForm="ngForm" id="genForm" style="margin-bottom: 150px">
+
+      <!-- This is the section of the form with general information -->
+
+      <mat-card *ngIf="showFirstSection">
+
+        <h2>Housing Application</h2>
+        <h3>General Preferences</h3>
+
+        <mat-form-field>
+          <input matInput placeholder="Full Name" ngModel name="name" id="name" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="text" name="banner" id="banner" ngModel required placeholder="Banner ID">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="text" name="email" id="email" ngModel #Select="ngModel" required
+            placeholder="Student Email">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select name="pronouns" id="pronouns" ngModel required #pronounsSelect="ngModel"
+            placeholder="Select your pronouns">
+            <mat-option value="He/Him">He/Him</mat-option>
+            <mat-option value="She/Her">She/Her</mat-option>
+            <mat-option value="They/Them">They/Them</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select name="semester" id="semester" ngModel required #semesterSelect="ngModel"
+            placeholder="Select the semester">
+            <mat-option value="Fall 2023">Fall 2023</mat-option>
+            <mat-option value="Spring 2024">Spring 2024</mat-option>
+            <mat-option value="Fall 2024">Fall 2024</mat-option>
+            <mat-option value="Spring 2025">Spring 2025</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select name="classification" id="classification" ngModel required #classificationSelect="ngModel"
+            placeholder="Select you grade level next semester">
+            <mat-option value="Freshman">Freshman</mat-option>
+            <mat-option value="Sophomore">Sophomore</mat-option>
+            <mat-option value="Junior">Junior</mat-option>
+            <mat-option value="Senior">Senior</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Next</button>
+
+      </mat-card>
+    </form>
+
+    <!-- This is the section of the form with the housing selection and room -->
+    <form (ngSubmit)="addBooking2(housingForm)" #housingForm="ngForm" id="housingForm" style="margin-bottom: 150px">
+      <mat-card *ngIf="showSecondSection">
+
+        <h2>Housing Application</h2>
+        <h3>Housing Section</h3>
+
+        <mat-form-field>
+          <mat-select name="resident" id="resident" ngModel required #residentSelect="ngModel"
+            placeholder="Want to live on-campus?">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.resident === 'Yes' && booking.classification !== 'Freshman'">
+          <mat-select name="style" id="style" ngModel required #styleSelect="ngModel"
+            placeholder="Select your preferred style">
+            <mat-option value="Traditional">Traditional</mat-option>
+            <mat-option value="Hotel">Hotel</mat-option>
+            <mat-option value="Suite">Suite</mat-option>
+            <mat-option value="Apartment">Apartment</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.resident === 'Yes' && booking.classification === 'Freshman'">
+          <mat-select name="style" id="style" ngModel required #styleSelect="ngModel"
+            placeholder="Select your preferred style">
+            <mat-option value="Traditional">Traditional</mat-option>
+            <mat-option value="Suite">Suite</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          *ngIf="housingForm.value.style === 'Traditional' && (booking.pronouns === 'She/Her' || booking.pronouns === 'They/Them' || booking.pronouns === 'Other')">
+          <mat-select name="hall" id="hall" ngModel required #hallSelect="ngModel"
+            placeholder="Select your residence hall">
+            <mat-option *ngFor="let hall of gendTradHalls" [value]="hall">{{hall}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.style === 'Traditional' && booking.pronouns === 'He/Him'">
+          <mat-select name="hall" id="hall" ngModel required #hallSelect="ngModel"
+            placeholder="Select your residence hall">
+            <mat-option *ngFor="let hall of tradHalls" [value]="hall">{{hall}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.style === 'Hotel'">
+          <mat-select name="hall" id="hall" ngModel required #hallSelect="ngModel"
+            placeholder="Select your residence hall">
+            <mat-option *ngFor="let hall of hotelHalls" [value]="hall">{{hall}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.style === 'Suite'">
+          <mat-select name="hall" id="hall" ngModel required #hallSelect="ngModel"
+            placeholder="Select your residence hall">
+            <mat-option *ngFor="let hall of suiteHalls" [value]="hall">{{hall}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.style === 'Apartment'">
+          <mat-select name="hall" id="hall" ngModel required #hallSelect="ngModel"
+            placeholder="Select your residence hall">
+            <mat-option *ngFor="let hall of apartHalls" [value]="hall">{{hall}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- This is the section where the rooms are selected. -->
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Appalachian Heights'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_app.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Mountain Laurel Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_trans.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Living Learning Center (LLC)'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_llc.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Belk Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_belk.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Cannon Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_cannon.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Cone Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_cone.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Dogwood Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_dog.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Doughton Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_dough.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Elkstone Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_elk.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Frank Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_frank.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Laurel Creek Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_laurel.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Mountaineer Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_mount.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Newland Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_newland.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'New River Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_newriver.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Raven Rocks'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_raven.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Sleep Inn'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_sleep.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Summit Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_summit.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'Thunder Hill'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_thunder.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="housingForm.value.hall === 'White Hall'">
+          <mat-select name="room" id="room" ngModel required #roomSelect="ngModel"
+            placeholder="Select an available room">
+            <mat-option *ngFor="let room of rooms_white.sort()" [value]="room">{{room}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="ngOnInit()">Previous</button>
+        <button mat-raised-button color="primary" type="submit">Next</button>
+
+      </mat-card>
+    </form>
+    <!-- This is the meal plan section of the form. -->
+    <form (ngSubmit)="addBooking3(mealForm)" #mealForm="ngForm" id="mealForm" style="margin-bottom: 150px">
+      <mat-card *ngIf="showThirdSection">
+
+        <h2>Housing Application</h2>
+        <h3>Meal Plan Section</h3>
+
+        <mat-form-field>
+          <mat-select name="mealPlan" id="mealPlan" ngModel required #mealPlanSelect="ngModel"
+            placeholder="Would you like a meal plan?">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="mealForm.value.mealPlan == 'Yes' && booking.classification == 'Freshman' && booking.resident == 'Yes'">
+          <mat-select name="meals" id="meals" ngModel required #mealsSelect="ngModel"
+            placeholder="Select an available meal plan">
+            <mat-option value="All Access 7">All Access 7</mat-option>
+            <mat-option value="Weekly 14">Weekly 14</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="mealForm.value.mealPlan == 'Yes' && booking.classification != 'Freshman' && booking.resident == 'Yes'">
+          <mat-select name="meals" id="meals" ngModel required #mealsSelect="ngModel"
+            placeholder="Select an available meal plan">
+            <mat-option value="All Access 5">All Access 5</mat-option>
+            <mat-option value="Weekly 10">Weekly 10</mat-option>
+            <mat-option value="Weekly 7">Weekly 7</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="mealForm.value.mealPlan == 'Yes' && booking.resident == 'No'">
+          <mat-select name="meals" id="meals" ngModel required #mealsSelect="ngModel"
+            placeholder="Select an available meal plan">
+            <mat-option value="Block 150">Block 150</mat-option>
+            <mat-option value="Block 100">Block 100</mat-option>
+            <mat-option value="Block 50">Block 50</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="showSecond()">Previous</button>
+        <button mat-raised-button color="primary" type="submit">Next</button>
+
+      </mat-card>
+    </form>
+
+    <!-- This is the parking pass section of the form. -->
+    <form (ngSubmit)="addBooking(parkingForm)" #parkingForm="ngForm" id="parkingForm" style="margin-bottom: 150px">
+      <mat-card *ngIf="showFourthSection">
+
+        <h2>Housing Application</h2>
+        <h3>Parking Section</h3>
+
+        <mat-form-field>
+          <mat-select name="parking" id="parking" ngModel required #parkingSelect="ngModel"
+            placeholder="Would you like a parking pass?">
+            <mat-option value="Yes">Yes</mat-option>
+            <mat-option value="No">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field
+          *ngIf="parkingForm.value.parking === 'Yes' && booking.classification === 'Freshman' &&
+        booking.hall !== 'Mountaineer Hall' && booking.hall !== 'Appalachian Heights' && booking.hall !== 'Mountain Laurel Hall'">
+          <mat-select name="lot" id="lot" ngModel required #lotSelect="ngModel" placeholder="Select an available lot">
+            <mat-option *ngFor="let lot of frParking" [value]="lot">{{lot}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          *ngIf="parkingForm.value.parking === 'Yes' && (booking.classification === 'Sophomore' || booking.classification === 'Junior' || booking.classification === 'Senior') &&
+            booking.hall !== 'Mountaineer Hall' && booking.hall !== 'Appalachian Heights' && booking.hall !== 'Mountain Laurel Hall'">
+          <mat-select name="lot" id="lot" ngModel required #lotSelect="ngModel" placeholder="Select an available lot">
+            <mat-option *ngFor="let lot of upperParking" [value]="lot">{{lot}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="parkingForm.value.parking === 'Yes' && booking.hall === 'Mountaineer Hall'">
+          <mat-select name="lot" id="lot" ngModel required #lotSelect="ngModel" placeholder="Select an available lot">
+            <mat-option *ngFor="let lot of mtrParking" [value]="lot">{{lot}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="parkingForm.value.parking === 'Yes' && booking.hall === 'Appalachian Heights'"
+          placeholder="Select an available lot">
+          <mat-select name="lot" id="lot" ngModel required #lotSelect="ngModel">
+            <mat-option *ngFor="let lot of aphParking" [value]="lot">{{lot}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="parkingForm.value.parking === 'Yes' && booking.hall === 'Mountain Laurel Hall'"
+          placeholder="Select an available lot">
+          <mat-select name="lot" id="lot" ngModel required #lotSelect="ngModel">
+            <mat-option *ngFor="let lot of mtlParking" [value]="lot">{{lot}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="showThird()">Previous</button>
+        <button mat-raised-button color="primary" type="submit">Submit Application</button>
+      </mat-card>
+    </form>
+  </div>
+</div>
